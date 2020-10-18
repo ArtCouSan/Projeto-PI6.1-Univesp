@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
     },
     inputPlaceholder: {
         paddingLeft: 10,
-        color: Colors.branco
+        color: 'black'
 
     },
     buttonSmall: {

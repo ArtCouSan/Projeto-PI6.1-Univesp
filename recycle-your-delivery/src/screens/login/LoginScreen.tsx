@@ -1,14 +1,35 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Image, View } from 'react-native';
 import { Button, Input } from 'react-native-elements';
+import LoginContext from '../../context/LoginContext';
 import { Colors } from '../../shared/style/colors';
 import { styles } from './LoginScreenStyle';
+import firebase from "../../firebase/config";
 
 const LoginScreen = ({ navigation }) => {
+
+    const {
+        handleChangeLoginEmail,
+        handleChangeLoginSenha,
+        botaoLoginDisable,
+        login
+    } = useContext(LoginContext);
 
     function esqueciMinhaSenha() {
 
     }
+
+    function singUp() {
+        if (login.email.trim().length && login.senha.trim().length) {
+            firebase
+                .auth()
+                .signInWithEmailAndPassword(login.email.trim(), login.senha.trim())
+                .then(result => {
+                    navigation.navigate("SideMenu");
+                });
+        }
+    }
+
 
     function singIn() {
         navigation.navigate("SigIn");
@@ -17,15 +38,17 @@ const LoginScreen = ({ navigation }) => {
     return (
         <View style={[styles.container]}>
 
-            <Image resizeMode="contain" style={{ marginBottom: 10, alignSelf: 'center'}} resizeMethod="resize" width={20} height={20} source={require("../../../assets/login-icon.png")} />
+            <Image resizeMode="cover" style={{ marginBottom: 10, alignSelf: 'center'}} resizeMethod="auto" width={100} height={100} source={require("../../../assets/login-icon.png")} />
 
             <Input
-                placeholder="Usuário"
+                onChangeText={value => handleChangeLoginEmail(value)}
+                placeholder="Email"
                 leftIcon={{ type: 'font-awesome', name: 'user', style: { color: Colors.fern } }}
-                maxLength={10}
+                maxLength={30}
                 style={[styles.inputPlaceholder]}
             />
             <Input
+                onChangeText={value => handleChangeLoginSenha(value)}
                 placeholder="Senha"
                 leftIcon={{ type: 'font-awesome', name: 'lock', style: { color: Colors.fern } }}
                 secureTextEntry={true}
@@ -33,9 +56,11 @@ const LoginScreen = ({ navigation }) => {
                 style={[styles.inputPlaceholder]}
             />
             <Button
+                disabled={botaoLoginDisable}
                 buttonStyle={[styles.buttonBackground]}
                 titleStyle={[styles.button]}
                 title="LOGAR"
+                onPress={() => singUp()}
             />
 
             <View style={[styles.containerButton]}>

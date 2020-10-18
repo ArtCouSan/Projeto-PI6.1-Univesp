@@ -6,7 +6,7 @@ import { Colors } from '../../shared/style/colors';
 import { styles } from './SignInScreenStyle';
 import firebase from "../../firebase/config";
 
-const SignInScreen = () => {
+const SignInScreen = ({navigation}) => {
 
     const {
         cadastroUser,
@@ -23,7 +23,7 @@ const SignInScreen = () => {
             .auth()
             .createUserWithEmailAndPassword(cadastroUser.email, cadastroUser.senha)
             .then((response) => {
-                console.log(response);
+                navigation.navigate("Login");
             })
             .catch((error) => {
                 console.log(error);
