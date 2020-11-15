@@ -3,10 +3,11 @@ import { Colors } from '../../style/colors';
 
 export const styles = StyleSheet.create({
     container: {
-        padding: 50,
-        flex: 1,
+        paddingTop: 30,
+        paddingLeft: 15,
+        paddingRight: 15,
         alignContent: 'center',
-        justifyContent: 'center',
-        backgroundColor: Colors.timberwolf
+        backgroundColor: Colors.timberwolf,
+        flex: 1
     }
 })

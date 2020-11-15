@@ -1,13 +1,20 @@
 import React from 'react';
-import { View } from 'react-native';
+import { SafeAreaView, View } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import { styles } from './BaseScreenStyle';
 
 const BaseScreen = ({ screen }) => {
 
     return (
-        <View style={[styles.container]}>
-            {screen}
-        </View>
+        <SafeAreaView
+            style={{flex: 1, marginTop: 20}}>
+            <ScrollView
+                scrollEnabled={true}
+                contentContainerStyle={{minHeight: '135%'}}
+                style={[styles.container]}>
+                {screen}
+            </ScrollView>
+        </SafeAreaView>
     )
 }
 

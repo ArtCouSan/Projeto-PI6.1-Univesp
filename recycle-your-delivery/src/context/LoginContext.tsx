@@ -4,7 +4,7 @@ import { LoginDTO } from '../core/dto/LoginDTO';
 import { UsuarioModel } from '../core/model/usuario.model';
 
 interface LoginContextData {
-    user: UsuarioModel | null;
+    user: UsuarioModel;
     login: LoginDTO;
     cadastroUser: CadastroDTO;
     handleChangeUsername: any;
@@ -14,6 +14,7 @@ interface LoginContextData {
     handleChangeConfirmarSenha: any;
     handleChangeLoginEmail: any;
     handleChangeLoginSenha: any;
+    handleUser: any;
     botaoLoginDisable: boolean;
     logout(): void;
 }
@@ -22,7 +23,12 @@ const LoginContext = createContext({} as LoginContextData);
 
 export const LoginProvider: React.FC = ({ children }) => {
 
-    const [user, setUser] = useState<UsuarioModel | null>(null);
+    const [user, setUser] = useState<UsuarioModel>({
+        email: '',
+        username: '',
+        id: '',
+        nome: ''
+    });
     const [botaoLoginDisable, setBotaoLoginDisable] = useState<boolean>(true);
     const [cadastroUser, setCadastroUser] = useState<CadastroDTO>({
         username: '',
@@ -98,8 +104,17 @@ export const LoginProvider: React.FC = ({ children }) => {
         })
     }
 
+    function handleUser(user: UsuarioModel) {
+        setUser(user);
+    }
+
     function logout() {
-        setUser(null);
+        setUser({
+            email: '',
+            username: '',
+            id: '',
+            nome: ''
+        });
     };
 
 
@@ -109,6 +124,7 @@ export const LoginProvider: React.FC = ({ children }) => {
             login,
             cadastroUser,
             botaoLoginDisable,
+            handleUser,
             handleChangeUsername,
             handleChangeNome,
             handleChangeEmail,

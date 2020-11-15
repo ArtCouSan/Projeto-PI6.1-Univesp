@@ -11,13 +11,10 @@ const LoginScreen = ({ navigation }) => {
     const {
         handleChangeLoginEmail,
         handleChangeLoginSenha,
+        handleUser,
         botaoLoginDisable,
         login
     } = useContext(LoginContext);
-
-    function esqueciMinhaSenha() {
-
-    }
 
     function singUp() {
         if (login.email.trim().length && login.senha.trim().length) {
@@ -25,6 +22,9 @@ const LoginScreen = ({ navigation }) => {
                 .auth()
                 .signInWithEmailAndPassword(login.email.trim(), login.senha.trim())
                 .then(result => {
+                    firebase.database().ref(`recycle/users/${result.user.uid}`).on('value', function (snapshot) {
+                        handleUser(snapshot.val().user)
+                    });
                     navigation.navigate("SideMenu");
                 });
         }
