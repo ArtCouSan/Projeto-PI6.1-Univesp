@@ -1,13 +1,15 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 import { SolicitacaoModel } from "../model/solicitacao.model";
 
-const api = axios.create({
+const apiConfig: AxiosRequestConfig = {
   baseURL: "http://10.0.2.2:8080/v1",
   responseType: "json",
   headers: {
     "Content-Type": "application/json",
   },
-});
+};
+
+const api = axios.create(apiConfig);
 
 function salvarSolicitacao(
   solicitacao: SolicitacaoModel
